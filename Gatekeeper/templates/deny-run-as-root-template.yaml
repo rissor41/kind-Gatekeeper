@@ -1,0 +1,21 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sdenyrootuser
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sDenyRootUser
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sdenyrootuser
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "Pod"
+          container := input.review.object.spec.containers[_]
+
+          not container.securityContext.runAsNonRoot
+          msg := sprintf("Containers must not run as root user: %v", [container.name])
+        }

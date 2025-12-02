@@ -1,0 +1,9 @@
+#cloud-config
+users:
+  - name: debian
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    # SSH PUBLIC KEY
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMyPmlo+4UToXZxzoBeWBJohGVFzFfeASe76zKATIUg8 noname@noname-VMware20-1
